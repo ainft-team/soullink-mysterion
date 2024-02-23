@@ -105,4 +105,101 @@ contract TestERC721 is Test {
         assertEq(alice_balance, 0);
         assertEq(bob_balance, 1);
     }   
+
+
+    function testApprove() public {
+        vm.prank(alice);
+        erc721.safeMint(bob); // token 0
+        
+        vm.prank(bob);
+        erc721.approve(alice, 0);
+        address owner_token_0 = erc721.ownerOf(0);
+        assertEq(bob, owner_token_0);
+        assertNotEq(alice, owner_token_0);
+
+        vm.prank(bob);
+        address _approved = erc721.getApproved(0);
+        assertEq(alice, _approved);
+    }
+
+    function testSetApprovalForAll() public {
+        vm.prank(alice);
+        erc721.safeMint(bob);
+        
+        vm.prank(bob);
+        erc721.setApprovalForAll(alice, true);
+        bool _approved = erc721.isApprovedForAll(bob, alice);
+        assertEq(_approved,true);
+    }
+
+    function testBurn() public {
+        vm.prank(alice);
+        erc721.safeMint(bob);
+        
+        vm.prank(alice);
+        vm.expectRevert(); // "Only token owner can burn the token"        
+        erc721.burn(0);
+
+        vm.prank(bob);
+        vm.expectCall(
+            address(erc721),
+            abi.encodeCall(erc721.burn, 0)
+        );
+        erc721.burn(0);
+        uint bob_balance = erc721.balanceOf(bob);
+        assertEq(bob_balance, 0);
+
+        vm.expectRevert(); // "Token does not exist"
+        erc721.ownerOf(0);
+    }
+
+    function testOnlyPauserPause() public {
+        vm.expectRevert(); // "Only pauser can pause the contract"
+        vm.prank(bob);
+        erc721.pause();
+
+        vm.expectCall(
+            address(erc721),
+            abi.encodeCall(erc721.pause, ())
+        );
+        vm.prank(alice);
+        erc721.pause();
+        bool paused = erc721.paused();
+        assertEq(paused, true);
+    }
+
+    function testGrantRole() public {
+        vm.expectRevert(); // "Only admin can grant role"
+        vm.prank(bob);
+        erc721.grantRole(keccak256("PAUSER_ROLE"), alice);
+
+        vm.expectCall(
+            address(erc721),
+            abi.encodeCall(erc721.grantRole, (keccak256("PAUSER_ROLE"), bob))
+        );
+        vm.prank(alice);
+        erc721.grantRole(keccak256("PAUSER_ROLE"), bob);
+        bool hasRole = erc721.hasRole(keccak256("PAUSER_ROLE"), bob);
+        assertEq(hasRole, true);
+    }
+
+    function testRevokeRole() public {
+        vm.prank(alice);
+        erc721.grantRole(keccak256("PAUSER_ROLE"), bob);
+        bool hasRole = erc721.hasRole(keccak256("PAUSER_ROLE"), bob);
+        assertEq(hasRole, true);
+
+        vm.expectRevert(); // "Only admin can revoke role"
+        vm.prank(bob);
+        erc721.revokeRole(keccak256("PAUSER_ROLE"), alice);
+
+        vm.prank(alice);
+        erc721.revokeRole(keccak256("PAUSER_ROLE"), bob);
+        hasRole = erc721.hasRole(keccak256("PAUSER_ROLE"), bob);
+        assertEq(hasRole, false);
+
+        vm.prank(bob);
+        bool _isPaused = erc721.paused();
+        assertEq(_isPaused, false);
+    }
 }
