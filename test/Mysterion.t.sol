@@ -16,12 +16,13 @@ contract TestERC721 is Test {
     address public cat = address(3);
 
     function setUp() public {
-        erc721 = new Mysterion(alice);
+        vm.prank(alice);
+        erc721 = new Mysterion("Mysterion", "MYST");
     }
 
     function testBaseURI() public {
         string memory uri = erc721.baseURI();
-        assertEq(uri, "https://api.mysterion.com/api/v1/token/");
+        assertEq(uri, "https://storage.googleapis.com/soullink-mysterion/metadata/");
     }
 
     function testSafeMint() public {
@@ -48,25 +49,25 @@ contract TestERC721 is Test {
         erc721.safeMint(alice);
 
         string memory uri = erc721.tokenURI(0);
-        assertEq(uri, "https://api.mysterion.com/api/v1/token/0");
+        assertEq(uri, "https://storage.googleapis.com/soullink-mysterion/metadata/0.json");
 
         vm.prank(alice);
         erc721.safeMint(bob);
         string memory uri2 = erc721.tokenURI(1);
-        assertEq(uri2, "https://api.mysterion.com/api/v1/token/1");
+        assertEq(uri2, "https://storage.googleapis.com/soullink-mysterion/metadata/1.json");
     }
 
     function testSetBaseURI() public {
         vm.prank(alice);
-        erc721.setBaseURI("https://api.mysterion.com/api/v2/token/");
+        erc721.setBaseURI("https://storage.googleapis.com/soullink-mysterion/v2/metadata/");
 
         string memory uri = erc721.baseURI();
-        assertEq(uri, "https://api.mysterion.com/api/v2/token/");
+        assertEq(uri, "https://storage.googleapis.com/soullink-mysterion/v2/metadata/");
 
         vm.prank(alice);
         erc721.safeMint(alice);
         string memory uri_token_0 = erc721.tokenURI(0);
-        assertEq(uri_token_0, "https://api.mysterion.com/api/v2/token/0");
+        assertEq(uri_token_0, "https://storage.googleapis.com/soullink-mysterion/v2/metadata/0.json");
     }
 
     function testGetBalance() public {

@@ -15,11 +15,14 @@ contract Mysterion is ERC721, ERC721Enumerable, ERC721Pausable, ERC721Burnable, 
 
     event updateBaseURI(string newBaseURI);
 
-    constructor(address defaultAdmin) ERC721("Mysterion", "MYST") {
-        _grantRole(DEFAULT_ADMIN_ROLE, defaultAdmin);
-        _grantRole(PAUSER_ROLE, defaultAdmin);
-        _grantRole(MINTER_ROLE, defaultAdmin);
-        baseURI = "https://api.mysterion.com/api/v1/token/";
+    constructor(
+        string memory _name, 
+        string memory _symbol) 
+    ERC721(_name, _symbol) {
+        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        _grantRole(PAUSER_ROLE, msg.sender);
+        _grantRole(MINTER_ROLE, msg.sender);
+        baseURI = "https://storage.googleapis.com/soullink-mysterion/metadata/";
     }
 
     function pause() public onlyRole(PAUSER_ROLE) {
@@ -47,8 +50,8 @@ contract Mysterion is ERC721, ERC721Enumerable, ERC721Pausable, ERC721Burnable, 
         super._increaseBalance(account, value);
     }
 
-    function tokenURI(uint256 tokenId) public view override(ERC721) returns (string memory) {
-        return super.tokenURI(tokenId);
+    function tokenURI(uint256 tokenId) public view virtual override(ERC721) returns (string memory) {
+        return bytes(baseURI).length > 0 ? string.concat(super.tokenURI(tokenId), ".json") : "";
     }
 
     function supportsInterface(bytes4 interfaceId)

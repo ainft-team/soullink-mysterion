@@ -8,12 +8,13 @@ contract MysterionScript is Script {
     function setUp() public {}
 
     function run() public {
-        address deployer = vm.envAddress(("DEPLOYER"));
+        // address deployer = vm.envAddress(("DEPLOYER"));
         uint256 deployerPrivateKey = vm.envUint(("PRIVATE_KEY"));
         vm.startBroadcast(deployerPrivateKey);
         // default address
 
-        Mysterion erc721 = new Mysterion(deployer);
+        new Mysterion("Mysterion", "MYST");
+        
         vm.stopBroadcast();
     }
 }
