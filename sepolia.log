@@ -1,0 +1,58 @@
+forge script script/Mysterion.s.sol:MysterionScript --broadcast --verify --rpc-url ${SEPOLIA_URL}
+[⠢] Compiling...
+No files changed, compilation skipped
+Script ran successfully.
+
+## Setting up (1) EVMs.
+
+==========================
+
+Chain 11155111
+
+Estimated gas price: 89.960263432 gwei
+
+Estimated total gas used for script: 2456426
+
+Estimated amount required: 0.220980730061214032 ETH
+
+==========================
+
+###
+Finding wallets for all the necessary addresses...
+##
+Sending transactions [0 - 0].
+⠁ [00:00:00] [#########################################################################] 1/1 txes (0.0s)
+Transactions saved to: /Users/pyo/workspace/soulfiction/soullink-mysterion/broadcast/Mysterion.s.sol/11155111/run-latest.json
+
+Sensitive values saved to: /Users/pyo/workspace/soulfiction/soullink-mysterion/cache/Mysterion.s.sol/11155111/run-latest.json
+
+##
+Waiting for receipts.
+⠉ [00:00:07] [#####################################################################] 1/1 receipts (0.0s)
+##### sepolia
+✅  [Success]Hash: 0x0b4ee52cf1d445a4308500a07ed03f25126f3d8a019dfab541000e1f437edad4
+Contract Address: 0x2C22651c6e98957f6e4BA201A040a78Cf6338912
+Block: 5366086
+Paid: 0.12520689843333731 ETH (1890095 gas * 66.243706498 gwei)
+
+
+Transactions saved to: /Users/pyo/workspace/soulfiction/soullink-mysterion/broadcast/Mysterion.s.sol/11155111/run-latest.json
+
+Sensitive values saved to: /Users/pyo/workspace/soulfiction/soullink-mysterion/cache/Mysterion.s.sol/11155111/run-latest.json
+
+
+
+==========================
+
+ONCHAIN EXECUTION COMPLETE & SUCCESSFUL.
+Total Paid: 0.12520689843333731 ETH (1890095 gas * avg 66.243706498 gwei)
+##
+Start verification for (1) contracts
+Start verifying contract `0x2c22651c6e98957f6e4ba201a040a78cf6338912` deployed on sepolia
+
+Contract [src/Mysterion.sol:Mysterion] "0x2C22651c6e98957f6e4BA201A040a78Cf6338912" is already verified. Skipping verification.
+All (1) contracts were verified!
+
+Transactions saved to: /Users/pyo/workspace/soulfiction/soullink-mysterion/broadcast/Mysterion.s.sol/11155111/run-latest.json
+
+Sensitive values saved to: /Users/pyo/workspace/soulfiction/soullink-mysterion/cache/Mysterion.s.sol/11155111/run-latest.json
