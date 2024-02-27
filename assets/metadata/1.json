@@ -1,0 +1,27 @@
+{
+    "name": "Soul Link : Mysterion (n)",
+    "description": "This very special Soul Link, hand-crafted by artist Lady Oong, is known as “Mysterion” to those whose gazes are fixed on Mars.  The Mysterion provides extra boosts in rewards over what a normal Soul Link would generate for its owner.",
+    "image": "https://storage.googleapis.com/soullink-mysterion/assets/1.png",
+    "attributes": [
+        {
+            "trait_type": "Art Type",
+            "value": "1-of-1"
+        },
+        {
+            "trait_type": "Artist",
+            "value": "Lady Oong"
+        },
+        {
+            "trait_type": "Color",
+            "value": "Sapphire"
+        },
+        {
+            "trait_type": "Type",
+            "value": "Mysterion(Rare)"
+        },
+        {
+            "trait_type": "Boost",
+            "value": "20%"
+        }
+    ]
+}
